@@ -499,10 +499,14 @@
                             <path d="M1207,1506C1207,1506 1242.582,1521.023 1279,1507" style="fill:none;stroke:rgb(233,145,125);stroke-width:8.33px;"/>
                         </g>
                         <g id="Ojo-izquierdo" ref="leftEye" serif:id="Ojo izquierdo" transform="matrix(1,0,0,1,2668.535433,243)">
-                            <ellipse cx="1057" cy="1133.5" rx="42" ry="55.5"/>
+                            <ellipse id="pupila-izq" cx="1057" cy="1133.5" rx="42" ry="55.5"/>
+                            <!-- Parpadeo Izquierdo: Arco hacia abajo -->
+                            <path id="parpadeo-izq" d="M1015,1145 Q1057,1090 1099,1145" style="fill:none;stroke:black;stroke-width:15px;stroke-linecap:round;opacity:0;" />
                         </g>
                         <g id="Ojo-Derecho" ref="rightEye" serif:id="Ojo Derecho" transform="matrix(1,0,0,1,3049.051144,243)">
-                            <ellipse cx="1057" cy="1133.5" rx="42" ry="55.5"/>
+                            <ellipse id="pupila-der" cx="1057" cy="1133.5" rx="42" ry="55.5"/>
+                            <!-- Parpadeo Derecho: Arco hacia abajo -->
+                            <path id="parpadeo-der" d="M1015,1145 Q1057,1090 1099,1145" style="fill:none;stroke:black;stroke-width:15px;stroke-linecap:round;opacity:0;" />
                         </g>
                         <g id="Ceja-Izquierda" serif:id="Ceja Izquierda" transform="matrix(1,0,0,1,2668.535433,243)">
                             <path d="M900,1019C900,1019 924.533,950.92 1010,953C1095.445,955.079 1139.978,976.989 1140,977C1140.008,977.004 1140.017,977.008 1140.025,977.012C1140.889,977.416 1163.542,988.394 1157,1026C1154.512,1040.301 1103.504,1020.589 1080,1015C1065.878,1011.642 987.599,991.671 900,1019Z" style="fill:rgb(57,44,38);stroke:black;stroke-width:8.33px;"/>
@@ -694,6 +698,33 @@ onMounted(() => {
             setRightBlushY = gsap.quickTo(rightBlushEl, "y", { duration: 0.7, ease: "power3" })
         }
         
+        // --- PARPADEO (BLINK) ---
+        const pupilaIzq = document.getElementById('pupila-izq')
+        const pupilaDer = document.getElementById('pupila-der')
+        const blinkIzq = document.getElementById('parpadeo-izq')
+        const blinkDer = document.getElementById('parpadeo-der')
+
+        const triggerBlink = () => {
+            if(pupilaIzq && pupilaDer && blinkIzq && blinkDer) {
+                // CERRAR OJOS (Ocultar pupila, mostrar arco)
+                gsap.set([pupilaIzq, pupilaDer], { opacity: 0 })
+                gsap.set([blinkIzq, blinkDer], { opacity: 1 })
+
+                // ABRIR OJOS (después de 150ms)
+                setTimeout(() => {
+                    gsap.set([pupilaIzq, pupilaDer], { opacity: 1 })
+                    gsap.set([blinkIzq, blinkDer], { opacity: 0 })
+                    
+                    // Programar siguiente parpadeo (aleatorio 2s - 5s)
+                    const randomDelay = Math.random() * 3000 + 2000 
+                    setTimeout(triggerBlink, randomDelay)
+                }, 150)
+            }
+        }
+        
+        // Iniciar ciclo de parpadeo
+        setTimeout(triggerBlink, 3000)
+
         window.addEventListener('mousemove', handleMouseMove)
     }
 })
