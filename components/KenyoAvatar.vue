@@ -550,7 +550,7 @@ const leftEye = ref(null)
 const rightEye = ref(null)
 const leftEar = ref(null)
 const rightEar = ref(null)
-const hairShadow = ref(null)  // Sombra del cabello/cara
+const hairShadow = ref(null)
 
 // Posición original del SVG
 let initialHeadX = 0, initialHeadY = 0
@@ -561,79 +561,62 @@ let initialRightEarX = 0, initialRightEarY = 0
 let initialHairShadowX = 0, initialHairShadowY = 0
 let initialJawX = 0, initialJawY = 0
 
-// Variables para las animaciones (QuickTo)
-let setHeadX, setHeadY
-let setHeadRotateX, setHeadRotateY  // Para rotación 3D
-let setLeftEyeX, setLeftEyeY
-let setRightEyeX, setRightEyeY
-let setLeftEarX, setLeftEarY, setLeftEarScaleX
-let setRightEarX, setRightEarY, setRightEarScaleX
+// Variables GSAP
+let setHeadX, setHeadY, setHeadRotateX, setHeadRotateY
+let setLeftEyeX, setLeftEyeY, setRightEyeX, setRightEyeY
+let setLeftEarX, setLeftEarY, setRightEarX, setRightEarY
 let setHairShadowX, setHairShadowY, setHairShadowScaleX 
 let setJawX, setJawY
-
-// Variables adicionales para cara completa
-let initialNoseX = 0, initialNoseY = 0
 let setNoseX, setNoseY
-
-let initialMouthX = 0, initialMouthY = 0
 let setMouthX, setMouthY
-
-let initialLeftBrowX = 0, initialLeftBrowY = 0
-let initialRightBrowX = 0, initialRightBrowY = 0
 let setLeftBrowX, setLeftBrowY, setRightBrowX, setRightBrowY
-
-let initialLeftBlushX = 0, initialLeftBlushY = 0
-let initialRightBlushX = 0, initialRightBlushY = 0
 let setLeftBlushX, setLeftBlushY, setRightBlushX, setRightBlushY
 
+let initialNoseX = 0, initialNoseY = 0
+let initialMouthX = 0, initialMouthY = 0
+let initialLeftBrowX = 0, initialLeftBrowY = 0
+let initialRightBrowX = 0, initialRightBrowY = 0
+let initialLeftBlushX = 0, initialLeftBlushY = 0
+let initialRightBlushX = 0, initialRightBlushY = 0
+
 onMounted(() => {
-    // Obtener elementos por ID ya que los refs en SVG pueden no funcionar
+    // Obtener elementos por ID
     const leftEarEl = document.getElementById('Oreja-izquierda')
     const rightEarEl = document.getElementById('Oreja-derecha')
     
-    // Aseguramos que los elementos existen
     if(headGroup.value && leftEye.value && rightEye.value) {
-                        
+        
+        // 1. Capturar posiciones iniciales
         initialHeadX = gsap.getProperty(headGroup.value, "x")
         initialHeadY = gsap.getProperty(headGroup.value, "y")
-        
         initialLeftEyeX = gsap.getProperty(leftEye.value, "x")
         initialLeftEyeY = gsap.getProperty(leftEye.value, "y")
-        
         initialRightEyeX = gsap.getProperty(rightEye.value, "x")
         initialRightEyeY = gsap.getProperty(rightEye.value, "y")
 
-        // Usar los elementos obtenidos por ID para las orejas
+        // 2. Configurar Animaciones (QuickTo)
+        setHeadX = gsap.quickTo(headGroup.value, "x", { duration: 0.8, ease: "power3" })
+        setHeadY = gsap.quickTo(headGroup.value, "y", { duration: 0.8, ease: "power3" })
+        setHeadRotateX = gsap.quickTo(headGroup.value, "rotateX", { duration: 0.6, ease: "power2" })
+        setHeadRotateY = gsap.quickTo(headGroup.value, "rotateY", { duration: 0.6, ease: "power2" })
+
+        setLeftEyeX = gsap.quickTo(leftEye.value, "x", { duration: 0.4, ease: "power3" })
+        setLeftEyeY = gsap.quickTo(leftEye.value, "y", { duration: 0.4, ease: "power3" })
+        setRightEyeX = gsap.quickTo(rightEye.value, "x", { duration: 0.4, ease: "power3" })
+        setRightEyeY = gsap.quickTo(rightEye.value, "y", { duration: 0.4, ease: "power3" })
+
         if (leftEarEl && rightEarEl) {
             initialLeftEarX = gsap.getProperty(leftEarEl, "x")
             initialLeftEarY = gsap.getProperty(leftEarEl, "y")
             initialRightEarX = gsap.getProperty(rightEarEl, "x")
             initialRightEarY = gsap.getProperty(rightEarEl, "y")
             
-            // Configurar animaciones para las orejas con los elementos correctos
             setLeftEarX = gsap.quickTo(leftEarEl, "x", { duration: 0.8, ease: "power3" })
             setLeftEarY = gsap.quickTo(leftEarEl, "y", { duration: 0.8, ease: "power3" })
             setRightEarX = gsap.quickTo(rightEarEl, "x", { duration: 0.8, ease: "power3" })
             setRightEarY = gsap.quickTo(rightEarEl, "y", { duration: 0.8, ease: "power3" })
         }
 
-        // 2. CONFIGURAR ANIMACIONES (QuickTo)
-        
-        // Cabeza: Lenta y pesada con rotación 3D
-        setHeadX = gsap.quickTo(headGroup.value, "x", { duration: 0.8, ease: "power3" })
-        setHeadY = gsap.quickTo(headGroup.value, "y", { duration: 0.8, ease: "power3" })
-        
-        // Rotación 3D para el efecto de "voltear la cabeza"
-        setHeadRotateX = gsap.quickTo(headGroup.value, "rotateX", { duration: 0.6, ease: "power2" })
-        setHeadRotateY = gsap.quickTo(headGroup.value, "rotateY", { duration: 0.6, ease: "power2" })
-
-        // Ojos: Rápidos y atentos
-        setLeftEyeX = gsap.quickTo(leftEye.value, "x", { duration: 0.4, ease: "power3" })
-        setLeftEyeY = gsap.quickTo(leftEye.value, "y", { duration: 0.4, ease: "power3" })
-        setRightEyeX = gsap.quickTo(rightEye.value, "x", { duration: 0.4, ease: "power3" })
-        setRightEyeY = gsap.quickTo(rightEye.value, "y", { duration: 0.4, ease: "power3" })
-        
-        // Sombra del cabello: se mueve siguiendo la cabeza
         if (hairShadow.value) {
             initialHairShadowX = gsap.getProperty(hairShadow.value, "x")
             initialHairShadowY = gsap.getProperty(hairShadow.value, "y")
@@ -642,9 +625,7 @@ onMounted(() => {
             setHairShadowScaleX = gsap.quickTo(hairShadow.value, "scaleX", { duration: 0.6, ease: "power2" })
         }
 
-        // --- NUEVAS ANIMACIONES FACIALES (Parallax 3D) ---
-        
-        // Elementos por ID
+        // Elementos faciales adicionales (Parallax)
         const noseEl = document.getElementById('nariz')
         const mouthEl = document.getElementById('boca')
         const jawEl = document.getElementById('Quijada')
@@ -667,7 +648,7 @@ onMounted(() => {
             setMouthY = gsap.quickTo(mouthEl, "y", { duration: 0.55, ease: "power3" })
         }
 
-        if(jawEl) {
+        if (jawEl) {
             initialJawX = gsap.getProperty(jawEl, "x")
             initialJawY = gsap.getProperty(jawEl, "y")
             setJawX = gsap.quickTo(jawEl, "x", { duration: 0.55, ease: "power3" })
@@ -698,7 +679,7 @@ onMounted(() => {
             setRightBlushY = gsap.quickTo(rightBlushEl, "y", { duration: 0.7, ease: "power3" })
         }
         
-        // --- PARPADEO (BLINK) ---
+        // --- PARPADEO ---
         const pupilaIzq = document.getElementById('pupila-izq')
         const pupilaDer = document.getElementById('pupila-der')
         const blinkIzq = document.getElementById('parpadeo-izq')
@@ -706,23 +687,21 @@ onMounted(() => {
 
         const triggerBlink = () => {
             if(pupilaIzq && pupilaDer && blinkIzq && blinkDer) {
-                // CERRAR OJOS (Ocultar pupila, mostrar arco)
+                // Cerrar
                 gsap.set([pupilaIzq, pupilaDer], { opacity: 0 })
                 gsap.set([blinkIzq, blinkDer], { opacity: 1 })
 
-                // ABRIR OJOS (después de 150ms)
+                // Abrir
                 setTimeout(() => {
                     gsap.set([pupilaIzq, pupilaDer], { opacity: 1 })
                     gsap.set([blinkIzq, blinkDer], { opacity: 0 })
                     
-                    // Programar siguiente parpadeo (aleatorio 2s - 5s)
                     const randomDelay = Math.random() * 3000 + 2000 
                     setTimeout(triggerBlink, randomDelay)
                 }, 150)
             }
         }
         
-        // Iniciar ciclo de parpadeo
         setTimeout(triggerBlink, 3000)
 
         window.addEventListener('mousemove', handleMouseMove)
