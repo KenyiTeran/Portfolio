@@ -1,8 +1,6 @@
 <template>
     <div class="avatar">
-        <div class="avatar-container" ref="container">            
-
-            <!-- Nuevo -->
+        <div class="avatar-container" ref="container">
              <svg width="100%" height="100%" viewBox="0 0 2416 2560" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
                 <g id="Mesa-de-trabajo" serif:id="Mesa de trabajo" transform="matrix(1,0,0,1,-2651.535433,0)">
                     <rect x="2651.535" y="0" width="2415.315" height="2559.874" style="fill:none;"/>
@@ -514,9 +512,9 @@
                         </g>
                         <g id="Cabello" transform="matrix(1,0,0,1,-0.030626,-3)">
                             <g id="Grupo-del-cabello" serif:id="Grupo del cabello" transform="matrix(0.973794,0,0,0.729751,75.190476,424)">
-                                <g id="Sobra-de-cabello" serif:id="Sobra de cabello" transform="matrix(1.026912,0,0,1.370331,-77.691042,-248.029861)">
-                                    <path d="M3509,1006C3514.346,1010.31 3585.862,944.172 3624,799C3624,799 3763.922,707.842 3980,742C3980,742 4042.3,896.801 4236,920C4236,920 4284.042,972.876 4325,995L4401,852C4394.026,847.455 4068.048,719.144 4012.892,686.458C3986.774,680.085 3905.91,672.014 3875,673C3875,673 3700.943,682.515 3581,769C3581,769 3567.179,891.677 3504.465,982.243C3500.512,987.953 3513.36,1000.551 3509,1006Z" style="fill:rgb(222,149,120);"/>
-                                </g>
+                                <g id="Sobra-de-cabello" ref="hairShadow" serif:id="Sobra de cabello" transform="matrix(1.026912,0,0,1.370331,-77.691042,-248.029861)">
+                        <path d="M3509,1006C3514.346,1010.31 3585.862,944.172 3624,799C3624,799 3763.922,707.842 3980,742C3980,742 4042.3,896.801 4236,920C4236,920 4335.042,1001.876 4376,1024L4401,852C4394.026,847.455 4068.048,719.144 4012.892,686.458C3986.774,680.085 3905.91,672.014 3875,673C3875,673 3700.943,682.515 3581,769C3581,769 3567.179,891.677 3504.465,982.243C3500.512,987.953 3513.36,1000.551 3509,1006Z" style="fill:rgb(222,149,120);"/>
+                    </g>
                                 <g id="Cabello1" serif:id="Cabello" transform="matrix(1.026912,0,0,1.370331,2663.13603,-248.029861)">
                                     <path d="M779,1101C779,1101 646.46,790.593 774,718C774,718 720.313,677.709 745,615C745,615 742.374,651.622 799,663C799,663 755.307,539.563 902,440C902,440 877.086,471.77 906,526C906,526 995.057,315.784 1232,304C1232,304 1182.108,340.342 1181,390C1181,390 1287.56,302.706 1416,345C1416,345 1346.014,365.452 1332,401C1332,401 1416.512,362.155 1533,431C1533,431 1611.999,481.237 1679,461C1679,461 1645.692,514.253 1578,516C1578,516 1740.104,525.16 1794,815C1794,815 1764.649,792.601 1744,792C1744,792 1776.159,905.117 1731.276,1068.921C1728.49,1079.09 1725.406,1089.455 1722,1100C1722,1100 1692.476,1111.894 1686,1122C1682.132,1128.036 1671.509,1162.138 1671.509,1162.138L1663,1190C1631.28,1078.028 1649.649,952.186 1649.649,952.186L1612.965,926.71C1568.769,881.786 1512.865,811.46 1513.36,791.826C1507.288,820.943 1519.24,857.197 1535.617,890.449C1458.842,873.271 1386.128,806.392 1335.02,705.553C1174.071,673.196 1029.199,704.575 924.021,782.138C924.021,782.138 916.504,903.417 836.019,1004.977L833,1207C818.098,1163.807 810.629,1105.486 779,1101Z" style="fill:rgb(56,43,37);stroke:black;stroke-width:8.33px;stroke-linecap:butt;stroke-miterlimit:2;"/>
                                 </g>
@@ -548,6 +546,7 @@ const leftEye = ref(null)
 const rightEye = ref(null)
 const leftEar = ref(null)
 const rightEar = ref(null)
+const hairShadow = ref(null)  // Sombra del cabello/cara
 
 // Posición original del SVG
 let initialHeadX = 0, initialHeadY = 0
@@ -555,15 +554,39 @@ let initialLeftEyeX = 0, initialLeftEyeY = 0
 let initialRightEyeX = 0, initialRightEyeY = 0
 let initialLeftEarX = 0, initialLeftEarY = 0
 let initialRightEarX = 0, initialRightEarY = 0
+let initialHairShadowX = 0, initialHairShadowY = 0
+let initialJawX = 0, initialJawY = 0
 
 // Variables para las animaciones (QuickTo)
 let setHeadX, setHeadY
+let setHeadRotateX, setHeadRotateY  // Para rotación 3D
 let setLeftEyeX, setLeftEyeY
 let setRightEyeX, setRightEyeY
-let setLeftEarX, setLeftEarY
-let setRightEarX, setRightEarY
+let setLeftEarX, setLeftEarY, setLeftEarScaleX
+let setRightEarX, setRightEarY, setRightEarScaleX
+let setHairShadowX, setHairShadowY, setHairShadowScaleX 
+let setJawX, setJawY
+
+// Variables adicionales para cara completa
+let initialNoseX = 0, initialNoseY = 0
+let setNoseX, setNoseY
+
+let initialMouthX = 0, initialMouthY = 0
+let setMouthX, setMouthY
+
+let initialLeftBrowX = 0, initialLeftBrowY = 0
+let initialRightBrowX = 0, initialRightBrowY = 0
+let setLeftBrowX, setLeftBrowY, setRightBrowX, setRightBrowY
+
+let initialLeftBlushX = 0, initialLeftBlushY = 0
+let initialRightBlushX = 0, initialRightBlushY = 0
+let setLeftBlushX, setLeftBlushY, setRightBlushX, setRightBlushY
 
 onMounted(() => {
+    // Obtener elementos por ID ya que los refs en SVG pueden no funcionar
+    const leftEarEl = document.getElementById('Oreja-izquierda')
+    const rightEarEl = document.getElementById('Oreja-derecha')
+    
     // Aseguramos que los elementos existen
     if(headGroup.value && leftEye.value && rightEye.value) {
                         
@@ -576,29 +599,100 @@ onMounted(() => {
         initialRightEyeX = gsap.getProperty(rightEye.value, "x")
         initialRightEyeY = gsap.getProperty(rightEye.value, "y")
 
-        initialLeftEarX = gsap.getProperty(leftEar.value, "x")
-        initialLeftEarY = gsap.getProperty(leftEar.value, "y")
-
-        initialRightEarX = gsap.getProperty(rightEar.value, "x")
-        initialRightEarY = gsap.getProperty(rightEar.value, "y")
+        // Usar los elementos obtenidos por ID para las orejas
+        if (leftEarEl && rightEarEl) {
+            initialLeftEarX = gsap.getProperty(leftEarEl, "x")
+            initialLeftEarY = gsap.getProperty(leftEarEl, "y")
+            initialRightEarX = gsap.getProperty(rightEarEl, "x")
+            initialRightEarY = gsap.getProperty(rightEarEl, "y")
+            
+            // Configurar animaciones para las orejas con los elementos correctos
+            setLeftEarX = gsap.quickTo(leftEarEl, "x", { duration: 0.8, ease: "power3" })
+            setLeftEarY = gsap.quickTo(leftEarEl, "y", { duration: 0.8, ease: "power3" })
+            setRightEarX = gsap.quickTo(rightEarEl, "x", { duration: 0.8, ease: "power3" })
+            setRightEarY = gsap.quickTo(rightEarEl, "y", { duration: 0.8, ease: "power3" })
+        }
 
         // 2. CONFIGURAR ANIMACIONES (QuickTo)
         
-        // Cabeza: Lenta y pesada
+        // Cabeza: Lenta y pesada con rotación 3D
         setHeadX = gsap.quickTo(headGroup.value, "x", { duration: 0.8, ease: "power3" })
         setHeadY = gsap.quickTo(headGroup.value, "y", { duration: 0.8, ease: "power3" })
+        
+        // Rotación 3D para el efecto de "voltear la cabeza"
+        setHeadRotateX = gsap.quickTo(headGroup.value, "rotateX", { duration: 0.6, ease: "power2" })
+        setHeadRotateY = gsap.quickTo(headGroup.value, "rotateY", { duration: 0.6, ease: "power2" })
 
         // Ojos: Rápidos y atentos
         setLeftEyeX = gsap.quickTo(leftEye.value, "x", { duration: 0.4, ease: "power3" })
         setLeftEyeY = gsap.quickTo(leftEye.value, "y", { duration: 0.4, ease: "power3" })
         setRightEyeX = gsap.quickTo(rightEye.value, "x", { duration: 0.4, ease: "power3" })
         setRightEyeY = gsap.quickTo(rightEye.value, "y", { duration: 0.4, ease: "power3" })
+        
+        // Sombra del cabello: se mueve siguiendo la cabeza
+        if (hairShadow.value) {
+            initialHairShadowX = gsap.getProperty(hairShadow.value, "x")
+            initialHairShadowY = gsap.getProperty(hairShadow.value, "y")
+            setHairShadowX = gsap.quickTo(hairShadow.value, "x", { duration: 0.7, ease: "power3" })
+            setHairShadowY = gsap.quickTo(hairShadow.value, "y", { duration: 0.7, ease: "power3" })
+            setHairShadowScaleX = gsap.quickTo(hairShadow.value, "scaleX", { duration: 0.6, ease: "power2" })
+        }
 
-        // Orejas: Se mueven un poco más lento que la cara
-        setLeftEarX = gsap.quickTo(leftEar.value, "x", { duration: 0.8, ease: "power3" })
-        setLeftEarY = gsap.quickTo(leftEar.value, "y", { duration: 0.8, ease: "power3" })
-        setRightEarX = gsap.quickTo(rightEar.value, "x", { duration: 0.8, ease: "power3" })
-        setRightEarY = gsap.quickTo(rightEar.value, "y", { duration: 0.8, ease: "power3" })
+        // --- NUEVAS ANIMACIONES FACIALES (Parallax 3D) ---
+        
+        // Elementos por ID
+        const noseEl = document.getElementById('nariz')
+        const mouthEl = document.getElementById('boca')
+        const jawEl = document.getElementById('Quijada')
+        const leftBrowEl = document.getElementById('Ceja-Izquierda')
+        const rightBrowEl = document.getElementById('Ceja-derecha')
+        const leftBlushEl = document.getElementById('Rubor-izquierdo')
+        const rightBlushEl = document.getElementById('Rubor-derecho')
+
+        if (noseEl) {
+            initialNoseX = gsap.getProperty(noseEl, "x")
+            initialNoseY = gsap.getProperty(noseEl, "y")
+            setNoseX = gsap.quickTo(noseEl, "x", { duration: 0.5, ease: "power3" })
+            setNoseY = gsap.quickTo(noseEl, "y", { duration: 0.5, ease: "power3" })
+        }
+ 
+        if (mouthEl) {
+            initialMouthX = gsap.getProperty(mouthEl, "x")
+            initialMouthY = gsap.getProperty(mouthEl, "y")
+            setMouthX = gsap.quickTo(mouthEl, "x", { duration: 0.55, ease: "power3" })
+            setMouthY = gsap.quickTo(mouthEl, "y", { duration: 0.55, ease: "power3" })
+        }
+
+        if(jawEl) {
+            initialJawX = gsap.getProperty(jawEl, "x")
+            initialJawY = gsap.getProperty(jawEl, "y")
+            setJawX = gsap.quickTo(jawEl, "x", { duration: 0.55, ease: "power3" })
+            setJawY = gsap.quickTo(jawEl, "y", { duration: 0.55, ease: "power3" })
+        }
+
+        if (leftBrowEl && rightBrowEl) {
+            initialLeftBrowX = gsap.getProperty(leftBrowEl, "x")
+            initialLeftBrowY = gsap.getProperty(leftBrowEl, "y")
+            initialRightBrowX = gsap.getProperty(rightBrowEl, "x")
+            initialRightBrowY = gsap.getProperty(rightBrowEl, "y")
+            
+            setLeftBrowX = gsap.quickTo(leftBrowEl, "x", { duration: 0.6, ease: "power3" })
+            setLeftBrowY = gsap.quickTo(leftBrowEl, "y", { duration: 0.6, ease: "power3" })
+            setRightBrowX = gsap.quickTo(rightBrowEl, "x", { duration: 0.6, ease: "power3" })
+            setRightBrowY = gsap.quickTo(rightBrowEl, "y", { duration: 0.6, ease: "power3" })
+        }
+
+        if (leftBlushEl && rightBlushEl) {
+            initialLeftBlushX = gsap.getProperty(leftBlushEl, "x")
+            initialLeftBlushY = gsap.getProperty(leftBlushEl, "y")
+            initialRightBlushX = gsap.getProperty(rightBlushEl, "x")
+            initialRightBlushY = gsap.getProperty(rightBlushEl, "y")
+            
+            setLeftBlushX = gsap.quickTo(leftBlushEl, "x", { duration: 0.7, ease: "power3" })
+            setLeftBlushY = gsap.quickTo(leftBlushEl, "y", { duration: 0.7, ease: "power3" })
+            setRightBlushX = gsap.quickTo(rightBlushEl, "x", { duration: 0.7, ease: "power3" })
+            setRightBlushY = gsap.quickTo(rightBlushEl, "y", { duration: 0.7, ease: "power3" })
+        }
         
         window.addEventListener('mousemove', handleMouseMove)
     }
@@ -612,32 +706,108 @@ const handleMouseMove = (e) => {
     const { innerWidth, innerHeight } = window
     
     // Normaliza la posición del mouse de -1 a 1
-    const xPos = (e.clientX / innerWidth - 0.5) * 2
-    const yPos = (e.clientY / innerHeight - 0.5) * 2
-
-    const headLimit = 20  // Cuánto se mueve la cabeza
-    const eyeLimit = 15  // Cuánto se mueven los ojos
-    const earLimit = -10  // Valor NEGATIVO para moverse al lado contrario
+    let xPos = (e.clientX / innerWidth - 0.5) * 2
+    let yPos = (e.clientY / innerHeight - 0.5) * 2
     
-    // Mover Cabeza
+    // LIMITAR: Clamp para evitar movimientos extremos en los bordes
+    const maxRange = 0.6  // Limita el rango a ±0.6 en lugar de ±1
+    xPos = Math.max(-maxRange, Math.min(maxRange, xPos))
+    yPos = Math.max(-maxRange, Math.min(maxRange, yPos))
+
+    // Valores REDUCIDOS para movimientos más sutiles
+    const headLimit = 12  // Reducido de 20
+    const headRotateLimit = 8  // Reducido de 12
+    const eyeLimit = 10  // Reducido de 15
+    const earLimit = -3  // Reducido de -5, muy sutil    
+    
+    // Mover Cabeza (traslación + rotación 3D)
     setHeadX(initialHeadX + (xPos * headLimit))
     setHeadY(initialHeadY + (yPos * headLimit))
+    
+    // Rotación 3D de la cabeza (efecto de voltear la cabeza)
+    setHeadRotateY(xPos * headRotateLimit)
+    setHeadRotateX(-yPos * headRotateLimit * 0.4)  // Reducido
 
     /* Mover ojos */
-    // Mover Ojo Izquierdo
     setLeftEyeX(initialLeftEyeX + (xPos * eyeLimit))
     setLeftEyeY(initialLeftEyeY + (yPos * eyeLimit))
-    // Mover Ojo Derecho
     setRightEyeX(initialRightEyeX + (xPos * eyeLimit))
     setRightEyeY(initialRightEyeY + (yPos * eyeLimit))
 
-    /* Mover orejas */
-    // Mover oreja izquierda
-    setLeftEarX(initialLeftEarX + (xPos * earLimit))
-    setLeftEarY(initialLeftEarY + (yPos * earLimit))
-    // Mover oreja derecha
-    setRightEarX(initialRightEarX + (xPos * earLimit))
-    setRightEarY(initialRightEarY + (yPos * earLimit))
+    /* Mover orejas - efecto de profundidad */
+    if (setLeftEarX && setLeftEarY && setRightEarX && setRightEarY) {
+        setLeftEarX(initialLeftEarX + (xPos * earLimit))
+        setLeftEarY(initialLeftEarY + (-yPos * 35))  // Bajan MUCHO cuando mouse sube (efecto de mirar arriba)
+        setRightEarX(initialRightEarX + (xPos * earLimit))
+        setRightEarY(initialRightEarY + (-yPos * 35))  // Bajan MUCHO cuando mouse sube (efecto de mirar arriba)
+    }    
+    
+    /* Mover sombra del cabello - comportamiento realista */
+    // Cuando mira a la izquierda: sombra se mueve a la izquierda, sube si mira arriba
+    // Cuando mira a la derecha: sombra se mueve a la derecha, sube si mira arriba
+    if (setHairShadowX && setHairShadowY && setHairShadowScaleX) {
+        const shadowLimitX = 2  // Movimiento horizontal (sigue la dirección de la cabeza)
+        const shadowLimitY = 1.5  // Movimiento vertical (sube cuando mira arriba)
+        const shadowScaleAmount = 0.02
+        
+        // Movimiento X: sigue la cabeza
+        setHairShadowX(initialHairShadowX + (xPos * shadowLimitX))
+        
+        // Movimiento Y: sube cuando mira hacia arriba (yPos negativo = arriba)
+        setHairShadowY(initialHairShadowY + (yPos * shadowLimitY))
+        
+        // Escala: se comprime cuando mira a la izquierda, se expande cuando mira a la derecha
+        // (simula que la sombra se "aplasta" del lado hacia donde gira)
+        setHairShadowScaleX(1 - (xPos * shadowScaleAmount))
+    }
+
+    // --- NUEVOS MOVIMIENTOS PARALLAX ---
+    // Factores de movimiento relativos a la cabeza (headLimit = 12)
+    // - Mayor que headLimit = se mueve MAS (parece que flota enfrente / sobresale)
+    // - Menor que headLimit = se mueve MENOS (parece que está plano o atrás)
+    
+    const noseLimit = 16    // Nariz: sobresale mucho
+    const mouthLimit = 16   // Boca: sobresale igual que la nariz
+    const jawLimit = 16     // Quijada: Mismo valor que la boca
+    const blushLimit = 14   // Rubor: sobre la piel, sobresale un poco más que la base
+    const browLimit = 14    // Cejas: sobre la frente, similar al rubor
+    const browYLimit = 10   // Movimiento vertical de cejas (expresión/perspectiva)
+    
+    // Nariz
+    if (setNoseX && setNoseY) {
+        setNoseX(initialNoseX + (xPos * noseLimit))
+        setNoseY(initialNoseY + (yPos * noseLimit))
+    }
+
+    // Boca
+    if (setMouthX && setMouthY) {
+        setMouthX(initialMouthX + (xPos * mouthLimit))
+        setMouthY(initialMouthY + (yPos * mouthLimit))
+    }
+
+    // Cejas
+    if (setLeftBrowX && setLeftBrowY && setRightBrowX && setRightBrowY) {
+        // X: Movimiento lateral con parallax
+        // Y: Movimiento vertical para perspectiva (se mueven con la cara)
+        setLeftBrowX(initialLeftBrowX + (xPos * browLimit))
+        setLeftBrowY(initialLeftBrowY + (yPos * browYLimit))
+        setRightBrowX(initialRightBrowX + (xPos * browLimit))
+        setRightBrowY(initialRightBrowY + (yPos * browYLimit))
+    }
+
+    // Rubor
+    if (setLeftBlushX && setLeftBlushY && setRightBlushX && setRightBlushY) {
+        setLeftBlushX(initialLeftBlushX + (xPos * blushLimit))
+        setLeftBlushY(initialLeftBlushY + (yPos * blushLimit))
+        setRightBlushX(initialRightBlushX + (xPos * blushLimit))
+        setRightBlushY(initialRightBlushY + (yPos * blushLimit))
+    }
+   
+    // Quijada
+    if (setJawX && setJawY) {
+        setJawX(initialJawX + (xPos * jawLimit))
+        setJawY(initialJawY + (yPos * jawLimit))
+    }
 }
 </script>
 
@@ -651,5 +821,19 @@ const handleMouseMove = (e) => {
     width: 500px;
     height: 500px;
     overflow: hidden;
+    /* Perspectiva 3D para el efecto de rotación */
+    perspective: 1000px;
+    perspective-origin: center center;
+}
+
+/* Asegura que el SVG mantenga la transformación 3D */
+.avatar-container svg {
+    transform-style: preserve-3d;
+}
+
+/* Centrar el origen de la rotación 3D en la cabeza */
+.avatar-container svg g#Cabeza {
+    transform-origin: center center;
+    transform-style: preserve-3d;
 }
 </style> 
