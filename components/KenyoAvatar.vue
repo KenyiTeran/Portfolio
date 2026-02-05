@@ -824,8 +824,7 @@ const handleMouseMove = (e) => {
 <style scoped>
 .avatar{
     display: flex;
-    justify-content: center;
-    background-color: #f0f0f0;
+    justify-content: center;    
 }
 .avatar-container {        
     width: 500px;
