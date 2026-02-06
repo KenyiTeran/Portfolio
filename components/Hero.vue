@@ -16,7 +16,7 @@ const heroText = [
     <div class="w-1/2 bg-white flex flex-col justify-center items-center">
       <div class="flex flex-col gap-6">
         <!-- Main Title -->
-        <h1 class="flex flex-col text-[96px] font-bold leading-none">
+        <h1 class="flex flex-col text-[96px] font-bold leading-none z-50">
           <span
             v-for="(item, index) in heroText"
             :key="index"
@@ -27,13 +27,13 @@ const heroText = [
         </h1>
 
         <!-- Subtitle -->
-        <p class="text-xl">
+        <p class="text-xl z-50">
           <span class="font-bold">¡Hola!</span> Gracias por visitar mi
           portafolio 😊
         </p>
 
         <!-- Buttons / Actions -->
-        <div class="flex items-center gap-x-4">
+        <div class="flex items-center gap-x-4 z-50">
           <!-- CV Button -->
           <a
             href="/cv.pdf"
@@ -66,7 +66,7 @@ const heroText = [
 
     <!-- Right Section (Image/Background) -->
     <div class="w-1/2 bg-[#29272A] flex items-end justify-center pb-20">
-      <KenyoAvatar />
+      <svg-KenyoAvatar />
     </div>
   </div>
 </template>
