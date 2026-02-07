@@ -11,11 +11,11 @@
       <NuxtLink to="/">Proyecto</NuxtLink>
       <NuxtLink to="/">Contacto</NuxtLink>
 
-      <div
+      <!-- <div
         class="absolute top-13 left-1/2 -translate-x-1/2 ml-[20px] -z-10"
       >
         <svg-Spotlight />
-      </div>
+      </div> -->
     </div>
   </header>
 </template>

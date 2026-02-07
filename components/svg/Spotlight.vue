@@ -9,8 +9,9 @@
         viewBox="0 0 1189 920"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        class="overflow-visible"    
       >
-        <g class="cursor-pointer pointer-events-auto" @click="toggleLight">
+        <g class="cursor-pointer pointer-events-auto" style="pointer-events: auto;" @click="toggleLight">
           <path
             d="M582.176 165.781C581.06 170.613 576.601 174.33 571.769 174.33C566.939 174.33 559.506 171.355 559.506 163.923C559.506 163.072 559.564 162.288 559.672 161.567C560.487 155.98 564.133 154.004 565.452 152.031C566.022 151.178 566.291 149.534 566.405 147.826C566.496 146.532 566.496 145.199 566.469 144.152C566.441 142.976 566.381 142.158 566.381 142.158L576.23 139.766C576.23 139.766 575.79 141.334 575.524 143.461C575.159 146.399 575.132 150.402 577.072 152.773C580.417 156.861 583.289 160.948 582.176 165.781Z"
             fill="#FFBA30"
@@ -112,7 +113,7 @@
         </g>
         <path
           id="light"
-          d="M0 920L508.5 146H634.5L1189 920H0Z"
+          d="M-2000 5000 L508.5 146 H634.5 L3189 5000 H-2000Z"
           fill="#D4A611"
           class="transition-all duration-300 pointer-events-none"
           :class="isOn ? 'light-on' : 'light-off'"
