@@ -2,14 +2,16 @@
   <div class="spotlight">
     <div
       class="spotlight-container pointer-events-none"
-      ref="container"      
+      ref="container"
     >
       <svg
-        width="994"
+        width="100%"
+        height="100%"
         viewBox="0 0 1189 920"
+        preserveAspectRatio="xMidYMax meet"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        class="overflow-visible"    
+        class="overflow-visible"
       >
         <g class="cursor-pointer pointer-events-auto" style="pointer-events: auto;" @click="toggleLight">
           <path
