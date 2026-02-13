@@ -16,7 +16,9 @@ const heroText = [
     class="flex flex-col lg:flex-row lg:min-h-screen relative overflow-hidden pb-5"
   >
     <!-- Absolute Spotlight -->
-    <div class="absolute top-23 left-1/2 -translate-x-1/2 md:w-[130%] flex justify-center z-20 pointer-events-none ml-[20px] transition-all duration-300">
+    <div
+      class="absolute -top-1 xs:top-23 left-1/2 -translate-x-1/2 md:w-[130%] xs:flex justify-center z-20 pointer-events-none ml-[20px] transition-all duration-300 hidden"
+    >
       <div class="w-[900px] md:w-[1000px] lg:w-[994px]">
         <Spotlight />
       </div>
@@ -26,7 +28,9 @@ const heroText = [
       class="order-2 lg:order-1 lg:w-1/2 bg-white flex flex-col justify-center md:items-center relative z-10 pl-10 md:pl-0"
     >
       <div class="flex flex-col gap-6">
-        <h1 class="flex flex-col text-[64px] md:text-[96px] font-bold leading-none">
+        <h1
+          class="flex flex-col text-[64px] md:text-[96px] font-bold leading-none"
+        >
           <span
             v-for="(item, index) in heroText"
             :key="index"
@@ -71,7 +75,7 @@ const heroText = [
     </div>
 
     <div
-      class="order-1 lg:order-2 lg:w-1/2 bg-[#29272A] flex items-end justify-center pb-5 lg:pb-20 relative z-10 h-140 md:h-160 lg:h-auto"
+      class="order-1 lg:order-2 lg:w-1/2 bg-[#29272A] flex items-end justify-center pb-5 lg:pb-20 relative z-10 h-120 xs:h-140 md:h-160 lg:h-auto"
     >
       <div
         class="w-64 md:w-80 lg:w-[450px] xl:w-[550px] transition-all duration-300"

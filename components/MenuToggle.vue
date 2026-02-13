@@ -6,20 +6,20 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue' 
+<script setup lang="ts">
+import { ref } from 'vue'
 
 const isActive = ref(false)
 
 const toggleMenu = () => {
-  isActive.value = !isActive.value
+  isActive.  value = !isActive.value
 }
 </script>
 
 <style scoped>
 .menu {
-  width: 50px;
-  height: 50px;  
+  width: 45px;
+  height: 45px;  
   border: 2px solid white; 
   border-radius: 10px;
   display: flex;
@@ -33,7 +33,7 @@ const toggleMenu = () => {
 
 .bar {
   height: 3px;
-  width: 30px;
+  width: 25px;
   background-color: white;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;  
